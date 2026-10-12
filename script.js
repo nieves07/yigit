@@ -1,6 +1,7 @@
 const MAX_PHOTOS = 12;
 const EXTENSIONS = ["jpg", "jpeg", "png", "webp"];
 const FEATURED_PHOTOS = [
+  "https://uploads.onecompiler.io/44ve7ewwc/455yjgu3t/magnific__sana-verdigim-oyuncak-aracn-icerisine-verdigim-kar__73917.png",
   "https://uploads.onecompiler.io/44ve7ewwc/455yjgu3t/WhatsApp%20Image%202026-10-12%20at%2020.53.16%20(1).jpeg",
   "https://uploads.onecompiler.io/44ve7ewwc/455yjgu3t/WhatsApp%20Image%202026-10-12%20at%2020.53.16.jpeg",
   "https://uploads.onecompiler.io/44ve7ewwc/455yjgu3t/WhatsApp%20Image%202026-10-12%20at%2020.53.14.jpeg",

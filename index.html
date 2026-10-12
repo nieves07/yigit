@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yiğit'in Doğum Günü</title>
+  <meta name="description" content="Yiğit'in doğum günü sitesi - oyuncak arabalar, güzel anlar ve dilekler." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="glow g1" aria-hidden="true"></div>
+  <div class="glow g2" aria-hidden="true"></div>
+
+  <nav class="nav" id="nav">
+    <a href="#hero" class="nav-logo">Yiğit<span class="dot">.</span></a>
+    <div class="nav-links">
+      <a href="#galeri">Fotoğraflar</a>
+      <a href="#sevdikleri">Sevdikleri</a>
+      <a href="#macera">Macera</a>
+      <a href="#dilekler">Dilekler</a>
+    </div>
+    <a href="#galeri" class="nav-cta">Fotoğraflara Bak</a>
+  </nav>
+
+  <header class="hero" id="hero">
+    <div class="hero-inner">
+      <p class="eyebrow reveal">Doğum günü · 2026</p>
+
+      <h1 class="hero-title reveal">
+        Mutlu Yıllar<br />
+        <span class="grad">Yiğit!</span>
+      </h1>
+
+      <p class="hero-sub reveal">
+        İyi ki doğdun minik yarışçı. Seni çok seviyoruz —
+        bu sayfa senin, fotoğraflar senin, güzel dilekler senin.
+      </p>
+
+      <div class="countdown reveal" role="timer" aria-label="Doğum gününe geri sayım">
+        <span class="countdown-title">DOĞUM gününe geri sayım</span>
+        <div class="countdown-values">
+          <div><strong id="countDays">00</strong><span>Gün</span></div>
+          <div><strong id="countHours">00</strong><span>Saat</span></div>
+          <div><strong id="countMinutes">00</strong><span>Dakika</span></div>
+          <div><strong id="countSeconds">00</strong><span>Saniye</span></div>
+        </div>
+      </div>
+
+      <div class="hero-actions reveal">
+        <div class="age-pill">
+          <span class="age-num" id="ageNum">4</span>
+          <span class="age-txt">yaşın<br /> kutlu olsun</span>
+        </div>
+        <a class="btn-primary" href="#galeri">Galeriyi Keşfet</a>
+        <a class="btn-ghost" href="#dilekler">Mumları Üfle</a>
+      </div>
+    </div>
+
+    <div class="road" aria-hidden="true">
+      <div class="road-glow"></div>
+      <div class="road-line"></div>
+      <div class="cars">
+        <span class="car c1" aria-hidden="true"><span class="car-shell"></span><span class="car-window"></span><i class="wheel wheel-front"></i><i class="wheel wheel-back"></i></span>
+        <span class="car c2" aria-hidden="true"><span class="car-shell"></span><span class="car-window"></span><i class="wheel wheel-front"></i><i class="wheel wheel-back"></i></span>
+        <span class="car c3" aria-hidden="true"><span class="car-shell"></span><span class="car-window"></span><i class="wheel wheel-front"></i><i class="wheel wheel-back"></i></span>
+        <span class="car c4" aria-hidden="true"><span class="car-shell"></span><span class="car-window"></span><i class="wheel wheel-front"></i><i class="wheel wheel-back"></i></span>
+        <span class="car c5" aria-hidden="true"><span class="car-shell"></span><span class="car-window"></span><i class="wheel wheel-front"></i><i class="wheel wheel-back"></i></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>🏁 Yiğit'in Yarış Pisti &nbsp; ✨ Kahkahalarla Dolu Bir Gün &nbsp; 🚗 Minik Yarışçı, Büyük Hayaller &nbsp; 🎂 İyi Ki Doğdun Yiğit &nbsp; 🏆 Şampiyon Sensin &nbsp; 💨 Vızzz, Macera Başlıyor &nbsp; 🎈 Dört Yaşında Harika Bir Yıl &nbsp; </span>
+      <span>🏁 Yiğit'in Yarış Pisti &nbsp; ✨ Kahkahalarla Dolu Bir Gün &nbsp; 🚗 Minik Yarışçı, Büyük Hayaller &nbsp; 🎂 İyi Ki Doğdun Yiğit &nbsp; 🏆 Şampiyon Sensin &nbsp; 💨 Vızzz, Macera Başlıyor &nbsp; 🎈 Dört Yaşında Harika Bir Yıl &nbsp; </span>
+    </div>
+  </div>
+
+  <section class="gallery" id="galeri">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow dark">Galeri</p>
+        <h2>Yiğit'in <span class="grad">Kareleri</span></h2>
+        <p class="section-desc">Eğlenceli anlar, kocaman gülüşler ve tabii ki oyuncak arabalar.</p>
+      </div>
+
+      <div class="grid" id="masonry"></div>
+
+      <p class="hint" id="galleryHint">
+        Fotoğrafları <code>photos/</code> klasörüne atın — <code>1.jpg</code>, <code>2.jpg</code>… otomatik burada görünsün.
+      </p>
+    </div>
+  </section>
+
+  <section class="likes" id="sevdikleri">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow dark">Profil</p>
+        <h2>Yiğit'in <span class="grad">Sevdikleri</span></h2>
+      </div>
+
+      <div class="cards">
+        <div class="card reveal"><div class="card-emoji">🏎️</div><h3>Oyuncak Arabalar</h3><p>En hızlısı her zaman onun ki. Vızzz!</p></div>
+        <div class="card reveal"><div class="card-emoji">🎨</div><h3>Boyamak</h3><p>Renkli kalemler, kocaman bir kağıt ve hayal gücü.</p></div>
+        <div class="card reveal"><div class="card-emoji">🍫</div><h3>Çikolata</h3><p>Tatlıya hayır diyemeyen minik gurme.</p></div>
+        <div class="card reveal"><div class="card-emoji">⚽</div><h3>Koşmak</h3><p>Durmadan, yorulmadan, kahkaha atarak.</p></div>
+        <div class="card reveal"><div class="card-emoji">🐾</div><h3>Hayvanlar</h3><p>Kedileri ve köpekleri çok seviyor.</p></div>
+        <div class="card reveal"><div class="card-emoji">🦸</div><h3>Süper Kahramanlar</h3><p>Aksiyon filmleri onun favorisi.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="timeline" id="macera">
+    <div class="container narrow">
+      <div class="section-head reveal">
+        <p class="eyebrow dark">Macera</p>
+        <h2>Yıllar Ne <span class="grad">Çabuk Geçti</span></h2>
+      </div>
+
+      <div class="tl">
+        <article class="tl-item reveal">
+          <div class="tl-card">
+            <span class="tl-emoji">👶</span>
+            <div><h3>İlk Gün</h3><p>Dünyaya hoş geldin minik adam. Herkesi sevindirdin.</p></div>
+          </div>
+        </article>
+        <article class="tl-item reveal">
+          <div class="tl-card">
+            <span class="tl-emoji">🚼</span>
+            <div><h3>İlk Adımlar</h3><p>Bir, iki, üç… ve koşmaya başladın. Artık durmak yok.</p></div>
+          </div>
+        </article>
+        <article class="tl-item reveal">
+          <div class="tl-card">
+            <span class="tl-emoji">🚗</span>
+            <div><h3>Araba Çağı</h3><p>İlk oyuncak arabanı aldın ve ev bir yarış pistine döndü.</p></div>
+          </div>
+        </article>
+        <article class="tl-item reveal">
+          <div class="tl-card">
+            <span class="tl-emoji">🎂</span>
+            <div><h3>Bugün</h3><p>Koca 4 yaş. Yeni maceralar seni bekliyor.</p></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="wishes" id="dilekler">
+    <div class="container narrow">
+      <div class="section-head reveal">
+        <p class="eyebrow dark">Dilekler</p>
+        <h2>Senin İçin <span class="grad">Dilediklerimiz</span></h2>
+      </div>
+
+      <div class="wish-grid">
+        <blockquote class="wish reveal">“Her günün bir bayram gibi geçsin.”</blockquote>
+        <blockquote class="wish reveal">“Oyuncak kutun hep dolu, gülüşün hep kocaman olsun.”</blockquote>
+        <blockquote class="wish reveal">“Dünyanın en hızlı yarışçısı sen ol.”</blockquote>
+        <blockquote class="wish reveal">“Bizi hep böyle mutlu etmeye devam et.”</blockquote>
+      </div>
+
+      <div class="cake reveal" id="cake">
+        <div class="cake-candles" id="candles">
+          <span class="candle"><i class="flame"></i></span>
+          <span class="candle"><i class="flame"></i></span>
+          <span class="candle"><i class="flame"></i></span>
+          <span class="candle"><i class="flame"></i></span>
+        </div>
+        <div class="cake-body"><span class="cherry"></span></div>
+        <button class="btn-primary" id="blowBtn">Mumları Üfle</button>
+        <p class="cake-msg" id="cakeMsg"></p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="footer-logo">Yiğit<span class="dot">.</span></p>
+      <p>Sevgiyle hazırlandı · İyi ki doğdun</p>
+      <p class="footer-car">🚗 💨</p>
+      <p class="footer-credit">Created by <a href="https://www.instagram.com/cesurdrnn/" target="_blank" rel="noopener noreferrer">NieVes</a></p>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lb-close" id="lbClose" aria-label="Kapat">&times;</button>
+    <button class="lb-prev" id="lbPrev" aria-label="Önceki">&#8249;</button>
+    <figure class="lb-stage">
+      <img id="lbNextImg" class="lb-next-page" src="" alt="" aria-hidden="true" />
+      <img id="lbImg" src="" alt="" />
+      <figcaption id="lbCap"></figcaption>
+    </figure>
+    <button class="lb-next" id="lbNext" aria-label="Sonraki">&#8250;</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

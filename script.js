@@ -6,7 +6,7 @@ const FEATURED_PHOTOS = [
   "https://uploads.onecompiler.io/44ve7ewwc/455yjgu3t/WhatsApp%20Image%202026-10-12%20at%2020.53.14.jpeg",
   "https://uploads.onecompiler.io/44ve7ewwc/455yjgu3t/Gemini_Generated_Image_iimi9aiimi9aiimi.jfif",
   "https://uploads.onecompiler.io/44ve7ewwc/455yjgu3t/Gemini_Generated_Image_bnvhsmbnvhsmbnvh.jfif"
-]; 
+];
 
 
 function probePhoto(index) {
@@ -53,9 +53,23 @@ async function loadGallery() {
     const tile = document.createElement("div");
     tile.className = "tile";
     tile.style.animationDelay = `${i * 0.07}s`;
+        tile.classList.add("is-loading");
     tile.innerHTML = `
       <img src="${file}" alt="Yiğit'in fotoğrafı ${i + 1}" loading="lazy" />
       <span class="tile-label">Yiğit 🚗</span>`;
+    const image = tile.querySelector("img");
+    image.addEventListener("load", () => {
+      tile.classList.remove("is-loading");
+      tile.classList.add("is-loaded");
+    }, { once: true });
+    image.addEventListener("error", () => {
+      tile.classList.remove("is-loading");
+      tile.classList.add("is-error");
+    }, { once: true });
+    if (image.complete) {
+      tile.classList.remove("is-loading");
+      tile.classList.add(image.naturalWidth ? "is-loaded" : "is-error");
+    }
     tile.addEventListener("click", () => openLightbox(i));
     masonry.appendChild(tile);
   });

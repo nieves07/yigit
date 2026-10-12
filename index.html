@@ -20,6 +20,7 @@
     <div class="nav-links">
       <a href="#galeri">Fotoğraflar</a>
       <a href="#sevdikleri">Sevdikleri</a>
+      <a href="#yaris">Mini Yarış</a>
       <a href="#macera">Macera</a>
       <a href="#dilekler">Dilekler</a>
     </div>
@@ -27,6 +28,7 @@
   </nav>
 
   <header class="hero" id="hero">
+    <div class="hero-backdrop" aria-hidden="true"></div>
     <div class="hero-inner">
       <p class="eyebrow reveal">Doğum günü · 2026</p>
 
@@ -80,6 +82,45 @@
     </div>
   </div>
 
+  <section class="music-section" id="muzik" aria-labelledby="musicTitle">
+    <div class="container narrow">
+      <div class="music-panel">
+        <div class="music-heading">
+          <div>
+            <p class="eyebrow dark">Doğum Günü Müziği</p>
+            <h2 id="musicTitle">Kutlamaya <span class="grad">Müzik Kat 🎵</span></h2>
+          </div>
+          <p>Oynat veya duraklat, zaman çubuğundan istediğin yere git ve sesi ayarla.</p>
+        </div>
+        <div class="music-player">
+          <iframe
+            id="musicVideo"
+            src="https://www.youtube.com/embed/1smn5H8Dwdo?enablejsapi=1&controls=0&playsinline=1&disablekb=1"
+            title="Doğum günü şarkısı — YouTube oynatıcı"
+            loading="eager"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </div>
+        <div class="music-custom" role="group" aria-label="Müzik kontrolleri">
+          <div class="music-main">
+            <button class="btn-primary" id="musicToggle" disabled aria-label="Şarkıyı oynat">▶ Oynat</button>
+            <span id="musicStatus" role="status">Oynatıcı yükleniyor…</span>
+          </div>
+          <label class="music-seek-label" for="musicSeek">Şarkıda ilerle <span id="musicTime">0:00 / 0:00</span></label>
+          <input id="musicSeek" type="range" min="0" max="0" value="0" step="1" disabled />
+          <div class="music-volume">
+            <button class="btn-ghost" id="musicMute" disabled aria-label="Sesi kapat" aria-pressed="false">🔊</button>
+            <label for="musicVolume">Ses</label>
+            <input id="musicVolume" type="range" min="0" max="100" value="70" disabled />
+            <output id="musicVolumeValue" for="musicVolume">%70</output>
+          </div>
+        </div>
+        <p class="music-note">Müzik kendiliğinden başlamaz. Şarkı YouTube üzerinden yüklenir ve internet bağlantısı gerektirir. Oynatıcı yüklenmezse <a href="https://www.youtube.com/watch?v=1smn5H8Dwdo" target="_blank" rel="noopener noreferrer">şarkıyı YouTube’da aç ↗</a>. Telefonda ses düzeyi cihazın ses tuşlarıyla ayarlanabilir.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="gallery" id="galeri">
     <div class="container">
       <div class="section-head reveal">
@@ -93,6 +134,26 @@
       <p class="hint" id="galleryHint">
         Fotoğrafları <code>photos/</code> klasörüne atın — <code>1.jpg</code>, <code>2.jpg</code>… otomatik burada görünsün.
       </p>
+    </div>
+  </section>
+
+  <section class="race-section" id="yaris">
+    <div class="container narrow">
+      <div class="section-head reveal">
+        <p class="eyebrow dark">Oyun</p>
+        <h2>Minik <span class="grad">Yarışçı</span></h2>
+        <p class="section-desc">Her yıldızla hızlan, engellere dikkat et! 3 canın var; üçüncü çarpışmada yarış biter. Ok tuşlarıyla veya aşağıdaki düğmelerle şerit değiştir.</p>
+      </div>
+      <div class="race-panel reveal">
+        <div class="race-score"><span>Puan: <strong id="raceScore">0</strong></span><span>Rekor: <strong id="raceBest">0</strong></span><span>Can: <strong id="raceLives">3</strong></span><span>Kalan: <strong id="raceTime">45</strong> sn</span></div>
+        <canvas id="raceCanvas" width="600" height="600" aria-label="Üç şeritli yarış oyunu; aşağıdaki düğmelerle kontrol edilir">Tarayıcınız oyun alanını desteklemiyor.</canvas>
+        <p class="race-message" id="raceMessage" role="status">45 saniyede kaç yıldız toplayabilirsin?</p>
+        <div class="race-controls">
+          <button class="btn-ghost" id="raceLeft" aria-label="Sol şeride geç">◀</button>
+          <button class="btn-primary" id="raceStart">Yarışı Başlat 🏁</button>
+          <button class="btn-ghost" id="raceRight" aria-label="Sağ şeride geç">▶</button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -164,7 +225,7 @@
         <blockquote class="wish reveal">“Bizi hep böyle mutlu etmeye devam et.”</blockquote>
       </div>
 
-      <div class="cake reveal" id="cake"> 
+      <div class="cake reveal" id="cake">
         <div class="cake-candles" id="candles">
           <span class="candle"><i class="flame"></i></span>
           <span class="candle"><i class="flame"></i></span>
@@ -180,10 +241,14 @@
 
   <footer class="footer">
     <div class="container footer-inner">
+      <div class="footer-car" aria-hidden="true">🏁 🚗 💨</div>
       <p class="footer-logo">Yiğit<span class="dot">.</span></p>
-      <p>Sevgiyle hazırlandı · İyi ki doğdun</p>
-      <p class="footer-car">🚗 💨</p>
-      <p class="footer-credit">Created by <a href="https://www.instagram.com/cesurdrnn/" target="_blank" rel="noopener noreferrer">NieVes</a></p>
+      <p class="footer-message">Küçük yarışçı, kocaman hayaller.</p>
+      <p class="footer-love">Sevgiyle hazırlandı <span aria-hidden="true">♥</span> İyi ki doğdun</p>
+      <div class="footer-bottom">
+        <p class="footer-credit">Created by <a href="https://www.instagram.com/cesurdrnn/" target="_blank" rel="noopener noreferrer">NieVes <span aria-hidden="true">↗</span></a></p>
+        <a class="footer-top" href="#hero">Başa dön <span aria-hidden="true">↑</span></a>
+      </div>
     </div>
   </footer>
 

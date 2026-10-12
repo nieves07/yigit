@@ -540,7 +540,38 @@ section { padding: 110px 0; position: relative; }
   display: block;
   border: 4px solid #fff;
   box-shadow: 0 2px 8px rgba(40, 35, 26, 0.18);
+  opacity: 0;
+  transition: opacity 0.55s ease;
 }
+
+.tile.is-loaded img { opacity: 1; }
+.tile.is-error img { visibility: hidden; }
+
+.tile.is-loading::after,
+.tile.is-error::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  right: 10px;
+  bottom: 38px;
+  left: 10px;
+  background: linear-gradient(110deg, #18223b 8%, #29365a 18%, #18223b 33%);
+  background-size: 200% 100%;
+  animation: photoShimmer 1.5s ease-in-out infinite;
+}
+
+.tile.is-error::after {
+  content: "Fotoğraf yüklenemedi";
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  animation: none;
+  background: #18223b;
+}
+
+.tile.is-loaded::after { display: none; }
 
 .tile::before {
   content: "";
@@ -866,6 +897,10 @@ section { padding: 110px 0; position: relative; }
 .lb-prev:hover { transform: translateY(-50%) scale(1.06); }
 .lb-next:hover { transform: translateY(-50%) scale(1.06); }
 
+@keyframes photoShimmer {
+  to { background-position-x: -200%; }
+}
+
 @keyframes pageOpen {
   from { opacity: 0; transform: rotateY(-16deg) translateY(12px) scale(0.96); }
   to { opacity: 1; transform: none; }
@@ -910,7 +945,7 @@ section { padding: 110px 0; position: relative; }
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
- 
+
 @keyframes confettiFall {
   0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
   100% { transform: translateY(110vh) rotate(720deg); opacity: 0.7; }

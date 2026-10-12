@@ -1,5 +1,13 @@
 const MAX_PHOTOS = 12;
 const EXTENSIONS = ["jpg", "jpeg", "png", "webp"];
+const FEATURED_PHOTOS = [
+  "https://uploads.onecompiler.io/44ve7ewwc/455yjgu3t/WhatsApp%20Image%202026-10-12%20at%2020.53.16%20(1).jpeg",
+  "https://uploads.onecompiler.io/44ve7ewwc/455yjgu3t/WhatsApp%20Image%202026-10-12%20at%2020.53.16.jpeg",
+  "https://uploads.onecompiler.io/44ve7ewwc/455yjgu3t/WhatsApp%20Image%202026-10-12%20at%2020.53.14.jpeg",
+  "https://uploads.onecompiler.io/44ve7ewwc/455yjgu3t/Gemini_Generated_Image_iimi9aiimi9aiimi.jfif",
+  "https://uploads.onecompiler.io/44ve7ewwc/455yjgu3t/Gemini_Generated_Image_bnvhsmbnvhsmbnvh.jfif"
+];
+
 
 function probePhoto(index) {
   return new Promise((resolve) => {
@@ -19,7 +27,7 @@ function probePhoto(index) {
 async function loadGallery() {
   const masonry = document.getElementById("masonry");
   const hint = document.getElementById("galleryHint");
-  const found = [];
+    const found = [...FEATURED_PHOTOS];
 
   for (let i = 1; i <= MAX_PHOTOS; i++) {
     const file = await probePhoto(i);
@@ -73,15 +81,39 @@ function renderLightbox() {
   document.getElementById("lbCap").textContent = `Yiğit'in güzel anısı (${lbIndex + 1}/${photos.length})`;
 }
 
+let pageTurning = false;
+
+function turnLightbox(dir) {
+  const photos = window.__photos || [];
+  if (!photos.length || pageTurning) return;
+
+  const nextIndex = (lbIndex + dir + photos.length) % photos.length;
+  const stage = document.querySelector(".lb-stage");
+  const nextPage = document.getElementById("lbNextImg");
+  const currentPage = document.getElementById("lbImg");
+  pageTurning = true;
+  nextPage.src = photos[nextIndex];
+  stage.classList.remove("turn-next", "turn-prev");
+  void stage.offsetWidth;
+  stage.classList.add(dir > 0 ? "turn-next" : "turn-prev");
+
+  setTimeout(() => {
+    lbIndex = nextIndex;
+    currentPage.src = photos[lbIndex];
+    nextPage.src = "";
+    stage.classList.remove("turn-next", "turn-prev");
+    document.getElementById("lbCap").textContent = `Yiğit'in güzel anısı (${lbIndex + 1}/${photos.length})`;
+    pageTurning = false;
+  }, 620);
+}
+
 function closeLightbox() {
   document.getElementById("lightbox").hidden = true;
   document.body.style.overflow = "";
 }
 
 function stepLightbox(dir) {
-  const photos = window.__photos || [];
-  lbIndex = (lbIndex + dir + photos.length) % photos.length;
-  renderLightbox();
+  turnLightbox(dir);
 }
 
 function blowCandles() {
@@ -120,6 +152,44 @@ function launchConfetti() {
   }
 }
 
+function initCountdown() {
+  const ids = ["countDays", "countHours", "countMinutes", "countSeconds"];
+  const title = document.querySelector(".countdown-title");
+  const storageKey = "yigitBirthdayWednesday";
+  let targetTime = Number(localStorage.getItem(storageKey));
+  let countdownInterval;
+
+  if (!targetTime) {
+    const target = new Date();
+    const daysUntilWednesday = (3 - target.getDay() + 7) % 7;
+    target.setDate(target.getDate() + daysUntilWednesday);
+    target.setHours(23, 59, 59, 999);
+    targetTime = target.getTime();
+    localStorage.setItem(storageKey, String(targetTime));
+  }
+
+  function update() {
+    const remaining = Math.max(0, targetTime - Date.now());
+    const values = [
+      Math.floor(remaining / 86400000),
+      Math.floor((remaining % 86400000) / 3600000),
+      Math.floor((remaining % 3600000) / 60000),
+      Math.floor((remaining % 60000) / 1000)
+    ];
+
+    ids.forEach((id, index) => {
+      document.getElementById(id).textContent = String(values[index]).padStart(2, "0");
+    });
+    if (remaining === 0) {
+      title.textContent = "İyi ki doğdun Yiğit! 🎂";
+      window.clearInterval(countdownInterval);
+    }
+  }
+
+  update();
+  countdownInterval = window.setInterval(update, 1000);
+}
+
 function initReveal() {
   const observer = new IntersectionObserver(
     (entries) => {
@@ -143,9 +213,10 @@ function initNav() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadGallery();
+    loadGallery();
   initReveal();
   initNav();
+  initCountdown();
 
   document.getElementById("lbClose").addEventListener("click", closeLightbox);
   document.getElementById("lbPrev").addEventListener("click", () => stepLightbox(-1));
@@ -153,8 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("lightbox").addEventListener("click", (e) => {
     if (e.target.id === "lightbox") closeLightbox();
   });
-  document.getElementById("blowBtn").addEventListener("click", blowCandles);
-
+    document.getElementById("blowBtn").addEventListener("click", blowCandles);
   document.addEventListener("keydown", (e) => {
     if (document.getElementById("lightbox").hidden) return;
     if (e.key === "Escape") closeLightbox();

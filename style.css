@@ -910,7 +910,7 @@ section { padding: 110px 0; position: relative; }
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
-
+ 
 @keyframes confettiFall {
   0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
   100% { transform: translateY(110vh) rotate(720deg); opacity: 0.7; }

@@ -1263,3 +1263,64 @@ section { padding: 110px 0; position: relative; }
   .memory-buttons .btn-primary, .race-controls .btn-primary { padding: 13px 18px; font-size: 0.9rem; }
   .race-score { font-size: 0.8rem; }
 }
+
+/* Dar ekranlarda kartların ve kontrollerin yatay taşmasını önle. */
+img, iframe, canvas { max-width: 100%; }
+.container, .hero-inner, .music-panel, .race-panel { min-width: 0; }
+.cards { grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
+.wish-grid { grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); }
+section[id], header[id] { scroll-margin-top: 100px; }
+
+@media (max-width: 860px) {
+  .nav { top: 12px; padding: 10px 20px; }
+  .hero { min-height: 100svh; padding: 115px 4vw 175px; }
+  .hero-inner { width: 100%; }
+  .hero-backdrop { background-position: center; }
+  .section-head { margin-bottom: 36px; }
+  .section-desc { max-width: 100%; overflow-wrap: anywhere; }
+}
+
+@media (max-width: 560px) {
+  section { padding: 56px 0; }
+  .nav { width: 92vw; }
+  .hero-title { font-size: clamp(2.8rem, 13vw, 4.2rem); }
+  .hero-sub { margin-top: 20px; font-size: 1rem; }
+  .hero-actions { gap: 12px; margin-top: 26px; }
+  .hero-actions .age-pill { flex: 0 0 auto; margin: 0 20%; }
+  .hero-actions > a { padding: 13px 20px; font-size: 0.95rem; }
+  .countdown { width: 100%; max-width: 350px; padding: 16px 12px; }
+  .countdown-values { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .countdown-values div { min-width: 0; }
+  .countdown-title { font-size: 0.7rem; letter-spacing: 0.08em; }
+  .marquee { padding: 14px 0; }
+  .marquee-track span { font-size: 0.85rem; }
+  .grid { padding: 30px 14px 30px 38px; border-radius: 12px; }
+  .grid::before { left: -7px; width: 26px; }
+  .grid { background-position: -18px 0, 0 0, 0 0; }
+  .tile-label { font-size: 0.85rem; }
+  .card { padding: 26px 22px; }
+  .tl-card > div { min-width: 0; }
+  .tl-card { gap: 12px; padding: 18px 16px; }
+  .tl-card:hover { transform: none; }
+  .tl-card p { overflow-wrap: anywhere; }
+  .wish { padding: 22px 18px; }
+  .wish-grid { margin-bottom: 56px; }
+  .music-custom { padding: 16px 12px; }
+  .music-main { gap: 12px; }
+  #musicToggle { width: 100%; }
+  #musicStatus { width: 100%; text-align: center; overflow-wrap: anywhere; }
+  .music-seek-label { flex-wrap: wrap; gap: 4px 12px; }
+  .music-volume { gap: 8px; flex-wrap: wrap; }
+  #musicVolume { flex: 1 1 80px; }
+  .music-note { overflow-wrap: anywhere; }
+  .race-score { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 12px; }
+  .race-score span:nth-child(even) { text-align: right; }
+  .race-controls { width: 100%; }
+  .race-controls .btn-ghost { flex: 0 0 44px; padding: 12px 0; background: transparent; cursor: pointer; }
+  .race-controls .btn-primary { min-width: 0; flex: 1; padding: 13px 8px; }
+  .race-message { font-size: 0.9rem; overflow-wrap: anywhere; }
+  .footer-bottom { flex-direction: column; gap: 12px; }
+  .lb-stage { width: 92vw; height: 70vh; height: 70dvh; }
+  .lb-close { top: 12px; right: 12px; width: 42px; height: 42px; }
+  .lb-stage figcaption { font-size: 0.85rem; padding: 0 8px; }
+}

@@ -24,38 +24,20 @@ function probePhoto(index) {
   });
 }
 
-async function loadGallery() {
+function loadGallery() {
   const masonry = document.getElementById("masonry");
   const hint = document.getElementById("galleryHint");
-    const found = [...FEATURED_PHOTOS];
+  const photos = [];
+  window.__photos = photos;
 
-  for (let i = 1; i <= MAX_PHOTOS; i++) {
-    const file = await probePhoto(i);
-    if (file) found.push(file);
-  }
+  function addPhoto(file) {
+    const index = photos.length;
+    photos.push(file);
 
-  if (found.length === 0) {
-    hint.style.display = "block";
-    masonry.innerHTML = `
-      <div class="tile">
-        <div class="tile-placeholder">
-          <span class="ph-icon">🚗</span>
-          <span>Fotoğraflar burada belirecek</span>
-          <span>photos/1.jpg, photos/2.jpg ...</span>
-        </div>
-      </div>`;
-    return;
-  }
-
-  hint.style.display = "none";
-
-  found.forEach((file, i) => {
     const tile = document.createElement("div");
-    tile.className = "tile";
-    tile.style.animationDelay = `${i * 0.07}s`;
-        tile.classList.add("is-loading");
+    tile.className = "tile is-loading";
     tile.innerHTML = `
-      <img src="${file}" alt="Yiğit'in fotoğrafı ${i + 1}" loading="lazy" />
+      <img src="${file}" alt="Yiğit'in fotoğrafı ${index + 1}" loading="lazy" />
       <span class="tile-label">Yiğit 🚗</span>`;
     const image = tile.querySelector("img");
     image.addEventListener("load", () => {
@@ -70,11 +52,21 @@ async function loadGallery() {
       tile.classList.remove("is-loading");
       tile.classList.add(image.naturalWidth ? "is-loaded" : "is-error");
     }
-    tile.addEventListener("click", () => openLightbox(i));
+    tile.addEventListener("click", () => openLightbox(index));
     masonry.appendChild(tile);
-  });
+  }
 
-  window.__photos = found;
+  FEATURED_PHOTOS.forEach(addPhoto);
+  hint.style.display = photos.length ? "none" : "block";
+
+  for (let i = 1; i <= MAX_PHOTOS; i++) {
+    probePhoto(i).then((file) => {
+      if (file) {
+        hint.style.display = "none";
+        addPhoto(file);
+      }
+    });
+  }
 }
 
 let lbIndex = 0;

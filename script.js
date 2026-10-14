@@ -8,7 +8,7 @@ const FEATURED_PHOTOS = [
   "https://uploads.onecompiler.io/44ve7ewwc/455yjgu3t/Gemini_Generated_Image_iimi9aiimi9aiimi.jfif",
   "https://uploads.onecompiler.io/44ve7ewwc/455yjgu3t/WhatsApp%20Image%202026-10-12%20at%2021.41.54.jpeg",
   "https://uploads.onecompiler.io/44ve7ewwc/455yjgu3t/WhatsApp%20Image%202026-10-12%20at%2021.34.03.jpeg",
-  "https://uploads.onecompiler.io/44ve7ewwc/455yjgu3t/Gemini_Generated_Image_bnvhsmbnvhsmbnvh.jfif"
+  "https://uploads.onecompiler.io/44ve7ewwc/455yjgu3t/Gemini_Generated_Image_ayzs52ayzs52ayzs.jfif"
 ];
 
 

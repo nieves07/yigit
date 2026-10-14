@@ -1202,8 +1202,26 @@ section { padding: 110px 0; position: relative; }
 .music-heading .eyebrow { margin-bottom: 10px; }
 .music-heading h2 { font-size: clamp(1.6rem, 4vw, 2.3rem); line-height: 1.2; }
 .music-heading > p { margin-top: 12px; color: var(--muted); }
-.music-player { display: none; }
+.music-player {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 200px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #000;
+}
 .music-player iframe { display: block; width: 100%; height: 100%; border: 0; }
+.music-player:not(.is-visible) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  min-height: 0;
+  clip-path: inset(50%);
+  pointer-events: none;
+}
+.music-fallback { margin-top: 16px; background: transparent; cursor: pointer; font-size: 0.9rem; }
+.music-fallback[hidden] { display: none; }
 .music-custom { margin-top: 20px; padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--bg-soft); }
 .music-main { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
 #musicStatus { color: var(--muted); font-size: 0.9rem; }
@@ -1262,6 +1280,275 @@ section { padding: 110px 0; position: relative; }
   .memory-buttons, .race-controls { gap: 8px; }
   .memory-buttons .btn-primary, .race-controls .btn-primary { padding: 13px 18px; font-size: 0.9rem; }
   .race-score { font-size: 0.8rem; }
+}
+
+/* Araç temalı giriş ekranı. */
+body.entry-locked { overflow: hidden; }
+#siteContent[hidden], .entry-gate[hidden] { display: none; }
+.entry-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  padding: 28px 4vw;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(129, 140, 248, 0.25), transparent 60%),
+    radial-gradient(ellipse at 85% 80%, rgba(244, 114, 182, 0.18), transparent 60%), var(--bg);
+}
+.entry-card {
+  width: min(480px, 100%);
+  padding: 36px 28px 0;
+  text-align: center;
+  border: 1px solid rgba(129, 140, 248, 0.35);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.entry-track {
+  position: relative;
+  height: 140px;
+  margin: -8px -28px 24px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #0a1020 0 48%, #252b39 48% 92%, #0a1020 92%);
+  border-bottom: 2px solid var(--amber);
+}
+.entry-track::after {
+  content: "";
+  position: absolute;
+  right: 24px;
+  top: 48%;
+  bottom: 8%;
+  width: 18px;
+  background: conic-gradient(#fff 25%, #111827 0 50%, #fff 0 75%, #111827 0) 0 0 / 12px 12px;
+}
+.entry-lights { display: flex; justify-content: center; gap: 12px; padding: 14px; }
+.entry-lights i {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #7f1d1d;
+  border: 3px solid #364158;
+  box-shadow: 0 0 0 4px #070b18;
+}
+.entry-lights i:first-child { background: #ef4444; box-shadow: 0 0 16px #ef4444; }
+.entry-car {
+  position: absolute;
+  z-index: 2;
+  top: 55px;
+  left: 18%;
+  width: 100px;
+  height: 64px;
+}
+.entry-jeep {
+  position: absolute;
+  left: 0;
+  bottom: 12px;
+  width: 108px;
+  height: 30px;
+  border: 1px solid #7dd3fc;
+  border-radius: 7px 12px 6px 6px;
+  background:
+    linear-gradient(90deg, #fb7185 0 4px, transparent 4px 94px, #e0f2fe 94px 103px, transparent 103px) 0 7px / 100% 7px no-repeat,
+    linear-gradient(180deg, #38bdf8, #0284c7 48%, #075985 49% 80%, #172336 80%);
+  box-shadow: inset 0 2px 0 #bae6fd, 0 12px 10px -5px rgba(0, 0, 0, 0.75);
+}
+.entry-jeep::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: -25px;
+  width: 67px;
+  height: 26px;
+  border: 2px solid #38bdf8;
+  border-top: 4px solid #172336;
+  border-bottom: 0;
+  border-radius: 7px 12px 0 0;
+  background: linear-gradient(180deg, #7dd3fc, #0284c7);
+  transform: skewX(8deg);
+  box-shadow: 0 -4px 0 -1px #94a3b8;
+}
+.entry-jeep::after {
+  content: "";
+  position: absolute;
+  right: -5px;
+  bottom: 0;
+  width: 17px;
+  height: 8px;
+  border: 1px solid #94a3b8;
+  border-radius: 3px;
+  background: #334155;
+  box-shadow: 12px -12px 22px 3px rgba(186, 230, 253, 0.35);
+}
+.entry-jeep-window {
+  position: absolute;
+  left: 18px;
+  top: -19px;
+  width: 55px;
+  height: 18px;
+  border: 2px solid #0c4a6e;
+  border-radius: 3px 7px 0 0;
+  background:
+    linear-gradient(90deg, transparent 43%, #172336 43% 51%, transparent 51%),
+    linear-gradient(145deg, #e0f2fe, #7dd3fc 45%, #1e3a5f 46%);
+  transform: skewX(8deg);
+}
+.entry-jeep-window::after {
+  content: "";
+  position: absolute;
+  right: -9px;
+  bottom: -4px;
+  width: 10px;
+  height: 6px;
+  border-radius: 3px;
+  background: #172336;
+}
+.entry-jeep-wheel {
+  position: absolute;
+  z-index: 3;
+  bottom: -13px;
+  width: 29px;
+  height: 29px;
+  border: 6px solid #0b1220;
+  border-radius: 50%;
+  background: repeating-conic-gradient(#cbd5e1 0deg 30deg, #475569 30deg 60deg);
+  box-shadow: 0 0 0 2px #334155, 0 -3px 0 3px #172336;
+}
+.entry-jeep-wheel::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background: #e0f2fe;
+}
+.entry-jeep-wheel-back { left: 10px; }
+.entry-jeep-wheel-front { right: 10px; }
+
+/* Giriş pistindeki alçak gövdeli yarış arabası. */
+.entry-jeep {
+  width: 100px;
+  height: 24px;
+  border: 1px solid #fda4af;
+  border-radius: 8px 22px 6px 6px;
+  background: linear-gradient(180deg, #fb7185, #e11d48 60%, #9f1239);
+  box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.35), 0 8px 10px -5px #000;
+}
+.entry-jeep::before {
+  left: 24px;
+  top: -17px;
+  width: 45px;
+  height: 18px;
+  border: 1px solid #fda4af;
+  border-bottom: 0;
+  border-radius: 18px 22px 0 0;
+  background: #e11d48;
+  transform: skewX(-18deg);
+  box-shadow: none;
+}
+.entry-jeep::after {
+  right: 2px;
+  bottom: 9px;
+  width: 9px;
+  height: 5px;
+  border: 0;
+  background: #fff3bd;
+  box-shadow: 10px 0 18px rgba(255, 243, 189, 0.5);
+}
+.entry-jeep-window {
+  left: 31px;
+  top: -13px;
+  width: 31px;
+  height: 12px;
+  border: 1px solid #881337;
+  border-radius: 10px 14px 0 0;
+  background: linear-gradient(135deg, #e0f2fe, #7dd3fc 45%, #1e3a5f);
+  transform: skewX(-18deg);
+}
+.entry-jeep-window::after { display: none; }
+.entry-jeep-wheel {
+  bottom: -9px;
+  width: 21px;
+  height: 21px;
+  border: 5px solid #0b1220;
+  background: #cbd5e1;
+  box-shadow: 0 0 0 1px #475569;
+}
+.entry-jeep-wheel::after { inset: 3px; background: #475569; }
+.entry-speed { position: absolute; left: -40px; bottom: 6px; opacity: 0; font-size: 2rem; transform: scaleX(-1); }
+.entry-track-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 18px;
+  height: 3px;
+  background: repeating-linear-gradient(90deg, #e2e8f0 0 28px, transparent 28px 52px);
+}
+.entry-gate.entry-success { pointer-events: none; animation: entryFadeOut 0.35s ease 1.65s forwards; }
+.entry-success .entry-lights i { animation: entryGreenLight 0.1s linear 0.7s forwards; }
+.entry-success .entry-lights i:nth-child(2) { animation-delay: 0.3s; }
+.entry-success .entry-lights i:nth-child(3) { animation-delay: 0.5s; }
+.entry-success .entry-car { animation: entryDriveAway 1s cubic-bezier(0.6, 0, 1, 1) 0.7s forwards; }
+.entry-success .entry-speed { animation: entryExhaust 0.2s ease 0.7s forwards; }
+.entry-success .entry-track-line { animation: entryRoadMove 0.3s linear infinite; }
+.entry-success .entry-error { color: #86efac; }
+@keyframes entryGreenLight {
+  to { background: #4ade80; border-color: #86efac; box-shadow: 0 0 20px #4ade80; }
+}
+@keyframes entryDriveAway {
+  0% { left: 18%; }
+  20% { left: 14%; }
+  100% { left: 120%; }
+}
+@keyframes entryExhaust { to { opacity: 1; } }
+@keyframes entryRoadMove { to { background-position: -52px 0; } }
+@keyframes entryFadeOut { to { opacity: 0; transform: scale(1.04); } }
+@media (prefers-reduced-motion: reduce) {
+  .entry-gate.entry-success, .entry-success .entry-car,
+  .entry-success .entry-speed, .entry-success .entry-track-line,
+  .entry-success .entry-lights i { animation: none; }
+  .entry-success .entry-lights i { background: #4ade80; }
+}
+.entry-card h1 { font-size: clamp(1.8rem, 6vw, 2.5rem); line-height: 1.15; }
+.entry-description { margin: 18px 0 24px; color: var(--muted); }
+#entryForm { display: grid; gap: 12px; }
+#entryForm label { font-size: 0.9rem; color: var(--muted); }
+.entry-keypad { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.entry-keypad button {
+  min-height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-soft);
+  color: var(--ink);
+  font: 600 1.2rem "Outfit", sans-serif;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background 0.2s, border-color 0.2s;
+}
+.entry-keypad button:hover { background: #263252; border-color: var(--indigo); }
+.entry-keypad button:active { background: #39456a; }
+.entry-keypad button[data-action] { font-size: 0.9rem; color: var(--muted); }
+.entry-keypad button:disabled { opacity: 0.5; cursor: default; }
+#entryPassword {
+  width: 100%;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--bg);
+  color: var(--ink);
+  font: 1.4rem "Outfit", sans-serif;
+  text-align: center;
+  letter-spacing: 0.25em;
+}
+#entryPassword:focus-visible, #entryForm button:focus-visible { outline: 2px solid var(--pink); outline-offset: 4px; }
+#entryPassword[aria-invalid="true"] { border-color: #fb7185; }
+.entry-error { min-height: 1.65em; color: #fda4af; font-size: 0.9rem; }
+.entry-finish {
+  height: 24px;
+  margin: 24px -28px 0;
+  background: conic-gradient(#e2e8f0 25%, #111827 0 50%, #e2e8f0 0 75%, #111827 0) 0 0 / 24px 24px;
 }
 
 /* Dar ekranlarda kartların ve kontrollerin yatay taşmasını önle. */

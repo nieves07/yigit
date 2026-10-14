@@ -257,6 +257,24 @@ function initMusic() {
   const status = document.getElementById("musicStatus");
   const time = document.getElementById("musicTime");
   const volumeValue = document.getElementById("musicVolumeValue");
+  const fallback = document.getElementById("musicFallback");
+  const video = document.getElementById("musicVideo");
+  const videoContainer = video.parentElement;
+  video.tabIndex = -1;
+  video.setAttribute("aria-hidden", "true");
+  let playbackTimeout;
+  function offerYouTube(message) {
+    status.textContent = message;
+    fallback.hidden = false;
+  }
+  fallback.addEventListener("click", () => {
+    videoContainer.classList.add("is-visible");
+    video.removeAttribute("aria-hidden");
+    video.tabIndex = 0;
+    fallback.setAttribute("aria-expanded", "true");
+    fallback.hidden = true;
+    video.focus();
+  });
   let player;
   let ready = false;
   let playing = false;
@@ -282,8 +300,14 @@ function initMusic() {
   }
   toggle.addEventListener("click", () => {
     if (!ready) return;
+    clearTimeout(playbackTimeout);
     if (playing) player.pauseVideo();
-    else player.playVideo();
+    else {
+      player.playVideo();
+      playbackTimeout = setTimeout(() => {
+        if (!playing) offerYouTube("Şarkı başlamadı. YouTube oynatıcısını açarak deneyebilirsin.");
+      }, 8000);
+    }
   });
   seek.addEventListener("input", () => {
     seeking = true;
@@ -312,7 +336,7 @@ function initMusic() {
     syncVolume();
   });
   const timeout = setTimeout(() => {
-    if (!ready) status.textContent = "Oynatıcı yüklenemedi; aşağıdaki bağlantıyı kullanabilirsin.";
+    if (!ready) offerYouTube("Özel kontroller yüklenemedi. Aşağıdaki düğmeyle YouTube oynatıcısını açabilirsin.");
   }, 15000);
   function createPlayer() {
     player = new YT.Player("musicVideo", {
@@ -329,6 +353,10 @@ function initMusic() {
         },
         onStateChange: (event) => {
           playing = event.data === YT.PlayerState.PLAYING;
+          if (playing) {
+            clearTimeout(playbackTimeout);
+            fallback.hidden = true;
+          }
           toggle.textContent = playing ? "❚❚ Duraklat" : "▶ Oynat";
           toggle.setAttribute("aria-label", playing ? "Şarkıyı duraklat" : "Şarkıyı oynat");
           status.textContent = playing ? "Şimdi çalıyor 🎶" : event.data === YT.PlayerState.BUFFERING ? "Yükleniyor…" : "Müzik durdu";
@@ -338,7 +366,8 @@ function initMusic() {
           clearTimeout(timeout);
           ready = false;
           toggle.disabled = seek.disabled = volume.disabled = mute.disabled = true;
-          status.textContent = "Şarkı burada oynatılamıyor; YouTube bağlantısını kullanabilirsin.";
+          clearTimeout(playbackTimeout);
+          offerYouTube("Şarkı açılamadı. YouTube oynatıcısını görüntüle veya aşağıdaki bağlantıyı kullan.");
         }
       }
     });
@@ -350,7 +379,7 @@ function initMusic() {
     api.src = "https://www.youtube.com/iframe_api";
     api.onerror = () => {
       clearTimeout(timeout);
-      status.textContent = "Müzik servisine ulaşılamadı; YouTube bağlantısını kullanabilirsin.";
+      offerYouTube("Müzik servisine ulaşılamadı. YouTube oynatıcısını görüntüleyerek deneyebilirsin.");
     };
     document.head.appendChild(api);
   }
@@ -524,7 +553,7 @@ function initRace() {
   draw();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function initSite() {
   initMusic();
   initRace();
   loadGallery();
@@ -544,5 +573,58 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "Escape") closeLightbox();
     if (e.key === "ArrowLeft") stepLightbox(-1);
     if (e.key === "ArrowRight") stepLightbox(1);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const gate = document.getElementById("entryGate");
+  const form = document.getElementById("entryForm");
+  const password = document.getElementById("entryPassword");
+  const error = document.getElementById("entryError");
+  let unlocked = false;
+
+  password.addEventListener("input", () => {
+    password.removeAttribute("aria-invalid");
+    error.textContent = "";
+  });
+  const keypad = form.querySelector(".entry-keypad");
+  keypad.addEventListener("click", (event) => {
+    const key = event.target.closest("button");
+    if (!key || unlocked) return;
+    if (key.dataset.digit !== undefined) password.value += key.dataset.digit;
+    else if (key.dataset.action === "clear") password.value = "";
+    else password.value = password.value.slice(0, -1);
+    password.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (unlocked) return;
+    // Boşluklu ve boşluksuz yazımı kabul et: 14 10 veya 1410.
+    if (password.value.replace(/\s/g, "") !== "1410") {
+      error.textContent = "Yanlış şifre! Pit stop yapıp yeniden dene 🏎️";
+      password.setAttribute("aria-invalid", "true");
+      password.focus();
+      password.select();
+      return;
+    }
+    unlocked = true;
+    password.disabled = true;
+    const button = form.querySelector('button[type="submit"]');
+    keypad.querySelectorAll("button").forEach((key) => { key.disabled = true; });
+    button.disabled = true;
+    button.textContent = "Yarış başlıyor! 🏁";
+    error.textContent = "Giriş başarılı! Kemerini tak, piste çıkıyoruz 🏎️";
+    gate.classList.add("entry-success");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setTimeout(() => {
+      gate.hidden = true;
+      const content = document.getElementById("siteContent");
+      content.hidden = false;
+      content.inert = false;
+      document.body.classList.remove("entry-locked");
+      password.value = "";
+      initSite();
+      document.querySelector(".nav-logo").focus({ preventScroll: true });
+    }, reducedMotion ? 400 : 2050);
   });
 });

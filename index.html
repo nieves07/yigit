@@ -10,8 +10,43 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="entry-locked">
 
+  <section class="entry-gate" id="entryGate" aria-labelledby="entryTitle">
+    <div class="entry-card">
+      <div class="entry-track" aria-hidden="true">
+        <div class="entry-lights"><i></i><i></i><i></i></div>
+        <div class="entry-car"><span class="entry-jeep"><span class="entry-jeep-window"></span><i class="entry-jeep-wheel entry-jeep-wheel-back"></i><i class="entry-jeep-wheel entry-jeep-wheel-front"></i></span><span class="entry-speed">💨</span></div>
+        <div class="entry-track-line"></div>
+      </div>
+      <p class="eyebrow">Yiğit'in Yarış Pisti</p>
+      <h1 id="entryTitle">Başlangıç çizgisine<br /><span class="grad">hoş geldin!</span></h1>
+      <p class="entry-description">Minik yarışçının doğum günü kutlamasına katılmak için giriş şifresini yaz.</p>
+      <form id="entryForm">
+        <label for="entryPassword">Pist giriş şifresi</label>
+        <input id="entryPassword" type="password" inputmode="numeric" autocomplete="off" placeholder="•• ••" required aria-describedby="entryError" />
+        <div class="entry-keypad" role="group" aria-label="Şifre sayı tuşları">
+          <button type="button" data-digit="1">1</button>
+          <button type="button" data-digit="2">2</button>
+          <button type="button" data-digit="3">3</button>
+          <button type="button" data-digit="4">4</button>
+          <button type="button" data-digit="5">5</button>
+          <button type="button" data-digit="6">6</button>
+          <button type="button" data-digit="7">7</button>
+          <button type="button" data-digit="8">8</button>
+          <button type="button" data-digit="9">9</button>
+          <button type="button" data-action="clear">Temizle</button>
+          <button type="button" data-digit="0">0</button>
+          <button type="button" data-action="delete" aria-label="Son rakamı sil">⌫</button>
+        </div>
+        <button class="btn-primary" type="submit">Piste Gir 🏁</button>
+        <p id="entryError" class="entry-error" role="alert"></p>
+      </form>
+      <div class="entry-finish" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <div id="siteContent" hidden inert>
   <div class="glow g1" aria-hidden="true"></div>
   <div class="glow g2" aria-hidden="true"></div>
 
@@ -95,7 +130,7 @@
         <div class="music-player">
           <iframe
             id="musicVideo"
-            src="https://www.youtube.com/embed/1smn5H8Dwdo?enablejsapi=1&controls=0&playsinline=1&disablekb=1"
+            src="https://www.youtube.com/embed/1smn5H8Dwdo?enablejsapi=1&controls=1&playsinline=1"
             title="Doğum günü şarkısı — YouTube oynatıcı"
             loading="eager"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -116,6 +151,7 @@
             <output id="musicVolumeValue" for="musicVolume">%70</output>
           </div>
         </div>
+        <button class="btn-ghost music-fallback" id="musicFallback" type="button" aria-controls="musicVideo" aria-expanded="false" hidden>Şarkı açılmadı mı? YouTube oynatıcısını görüntülemek için basın</button>
         <p class="music-note">Müzik kendiliğinden başlamaz. Şarkı YouTube üzerinden yüklenir ve internet bağlantısı gerektirir. Oynatıcı yüklenmezse <a href="https://www.youtube.com/watch?v=1smn5H8Dwdo" target="_blank" rel="noopener noreferrer">şarkıyı YouTube’da aç ↗</a>. Telefonda ses düzeyi cihazın ses tuşlarıyla ayarlanabilir.</p>
       </div>
     </div>
@@ -261,6 +297,8 @@
       <figcaption id="lbCap"></figcaption>
     </figure>
     <button class="lb-next" id="lbNext" aria-label="Sonraki">&#8250;</button>
+  </div>
+
   </div>
 
   <script src="script.js"></script>
